@@ -27,7 +27,7 @@ export ACCESS_TOKEN="{INSTAGRAM ACCESS_TOKEN}
 ```
 Usage of ./instagram-agent:
   -dashboardURL string
-       	Dashboard service URL (default "http://localhost:8080/dashboard/v1/register")
-  -httpAddr strin
-       	HTTP listen address (default ":8090")
+    	Dashboard service URL (default "http://localhost:8080/dashboard/v1/register")
+  -httpAddr string
+    	HTTP listen address (default "127.0.0.1:8090")
 ```
