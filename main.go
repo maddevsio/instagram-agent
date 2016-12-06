@@ -16,8 +16,9 @@ import (
 )
 
 const (
-	defaultPort         = "8090"
-	defaultDashboardURL = "http://localhost:8080/dashboard/v1/register"
+	defaultPort          = "8090"
+	defaultDashboardURL  = "http://localhost:8080/dashboard/v1/register"
+	defaultListenAddress = "0.0.0.0"
 )
 
 var (
@@ -31,10 +32,11 @@ type Env struct {
 
 func main() {
 	var (
-		addr         = envString("PORT", defaultPort)
+		port         = envString("PORT", defaultPort)
 		dashboardUrl = envString("DASHBOARD_URL", defaultDashboardURL)
+		addr         = envString("LISTEN_ADDRESS", defaultListenAddress)
 
-		httpAddr     = flag.String("httpAddr", "127.0.0.1:"+addr, "HTTP listen address")
+		httpAddr     = flag.String("httpAddr", addr+":"+port, "HTTP listen address")
 		dashboardURL = flag.String("dashboardURL", dashboardUrl, "Dashboard service URL")
 	)
 

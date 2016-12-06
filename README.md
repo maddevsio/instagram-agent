@@ -21,6 +21,7 @@ export PORT=8090
 export DASHBOARD_URL="http://localhost:8080/dashboard/v1/register"
 export CLIEND_ID="{INSTAGRAM CLIENT_ID}"
 export ACCESS_TOKEN="{INSTAGRAM ACCESS_TOKEN}
+export LISTEN_ADDRESS="127.0.0.1"
 ```
 
 ## Flag usage
@@ -29,5 +30,5 @@ Usage of ./instagram-agent:
   -dashboardURL string
     	Dashboard service URL (default "http://localhost:8080/dashboard/v1/register")
   -httpAddr string
-    	HTTP listen address (default "127.0.0.1:8090")
+    	HTTP listen address (default "0.0.0.0:8090")
 ```
