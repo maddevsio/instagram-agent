@@ -1,14 +1,29 @@
 language: go
 go:
-- 1.7.3
-- tip
+  - 1.7.3
+  - tip
 env:
   global:
   - GO_FOR_RELEASE=1.7.3
   - IMAGE_NAME=maddevsio/sm-instagram-agent
 services:
-- docker
+  - docker
+before_install:
+  - openssl aes-256-cbc -K $encrypted_bbb8271dd3c2_key -iv $encrypted_bbb8271dd3c2_iv
+    -in sm-docker-key.enc -out ./sm-docker-key -d
 script:
-- go test -v .
-- go build -v
-- curl https://raw.githubusercontent.com/maddevsio/travis-push-to-docker/master/sm-push.sh | bash
+  - go test -v .
+  - go build -v
+  - curl https://raw.githubusercontent.com/maddevsio/travis-push-to-docker/master/sm-push.sh | bash
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: chmod 600 sm-docker-key && 
+    ssh -o StrictHostKeyChecking=no -i ./sm-docker-key sm-docker@sm.maddevs.io "pull $IMAGE_NAME:v.$TRAVIS_BUILD_NUMBER" && 
+    ssh -o StrictHostKeyChecking=no -i ./sm-docker-key sm-docker@sm.maddevs.io "rm -f sm-instagram-agent" || true && 
+    ssh -o StrictHostKeyChecking=no -i ./sm-docker-key sm-docker@sm.maddevs.io "run -d --restart=always --name=sm-instagram-agent --net=sm
+    -p 127.0.0.1:9091:9091 -e $CLIEND_ID -e $ACCESS_TOKEN -e IP_ADDRESS=sm.maddevs.io -e PORT=9091 
+    -e DASHBOARD_URL=http://sm.maddevs.io/dashboard/v1/register $IMAGE_NAME:v.$TRAVIS_BUILD_NUMBER"
+  on:
+    go: 1.7.3
+
