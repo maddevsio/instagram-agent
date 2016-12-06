@@ -22,7 +22,7 @@ deploy:
     ssh -o StrictHostKeyChecking=no -i ./sm-docker-key sm-docker@sm.maddevs.io "pull $IMAGE_NAME:v.$TRAVIS_BUILD_NUMBER" && 
     ssh -o StrictHostKeyChecking=no -i ./sm-docker-key sm-docker@sm.maddevs.io "rm -f sm-instagram-agent" || true && 
     ssh -o StrictHostKeyChecking=no -i ./sm-docker-key sm-docker@sm.maddevs.io "run -d --restart=always --name=sm-instagram-agent --net=sm
-    -p 127.0.0.1:9091:9091 -e CLIENT_ID=$CLIEND_ID -e ACCESS_TOKEN=$ACCESS_TOKEN -e IP_ADDRESS=sm.maddevs.io -e PORT=9091 
+    -p 127.0.0.1:9091:9091 -e CLIENT_ID=$CLIEND_ID -e ACCESS_TOKEN=$ACCESS_TOKEN -e LISTEN_ADDRESS=sm.maddevs.io -e PORT=9091 
     -e DASHBOARD_URL=http://sm.maddevs.io/dashboard/v1/register $IMAGE_NAME:v.$TRAVIS_BUILD_NUMBER"
   on:
     go: 1.7.3
