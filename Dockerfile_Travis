@@ -1,0 +1,13 @@
+FROM golang:1.7
+
+MAINTAINER Andreev Vlad <andreevlad@gmail.com>
+
+COPY . /agent
+
+WORKDIR /agent
+
+EXPOSE 9091
+
+WORKDIR /agent
+
+CMD ["./instagram-agent"]

@@ -1,0 +1,14 @@
+language: go
+go:
+- 1.7.3
+- tip
+env:
+  global:
+  - GO_FOR_RELEASE=1.7.3
+  - IMAGE_NAME=maddevsio/sm-instagram-agent
+services:
+- docker
+script:
+- go test -v .
+- go build -v
+- curl https://raw.githubusercontent.com/maddevsio/travis-push-to-docker/master/sm-push.sh | bash
